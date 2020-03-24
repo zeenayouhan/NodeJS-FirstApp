@@ -1,11 +1,39 @@
-const EventEmitter = require('events');
+const http= require('http');
 
-const emitter = new EventEmitter();
-emitter.on('MessageLogged',(arg)=>{
-    console.log('Called Listenner',arg);
-})
-emitter.emit('MessageLogged',{id:1,url:'https://'});
+const server= http.createServer((req,res)=>{
+    if(req.url==='/'){
+        res.write("Hello World");
+        res.end();
+    }
+    if(req.url==='/api/zeena'){
+        res.write(JSON.stringify([1, 2, 3]));
+        res.end();
+    }
+});
 
+//server.on("connection",(Socket)=>{
+//    console.log("Connected");/
+//})
+
+server.listen(5000);
+
+console.log("Port is 5 000")
+
+
+//##########################################
+//const EventEmitter = require('events');
+
+
+
+//const Logger=require('./logger');
+//const log=new Logger();
+
+
+//log.on('MessageLogged',(arg)=>{
+//    console.log('Called Listenner',arg);
+//})
+
+//log.log("Message");
 
 //########################################
 //const fs= require('fs');
