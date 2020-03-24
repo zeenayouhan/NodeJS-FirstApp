@@ -1,8 +1,21 @@
-const os= require('os');
+const fs= require('fs');
 
-var freememd= os.freemem();
+const files= fs.readdirSync('./');
 
-console.log(freememd);
+console.log(files);
+
+fs.readdir('./k',function(err,files){
+    if(err) console.log('Error');
+    else console.log(files);
+})
+
+
+//########################################
+//const os= require('os');
+
+//var freememd= os.freemem();
+
+//console.log(freememd);
 
 
 
