@@ -1,13 +1,20 @@
-var logger= require('./logger.js');
+const path = require('path');
+var pathobj= path.parse(__filename);
 
-console.log(logger);
-
-
-
-
-logger.log("Hi Zeena");
+console.log(pathobj);
 
 
+//##########################################
+//var logger= require('./logger.js');
+
+//console.log(logger);
+
+
+
+
+//logger.log("Hi Zeena");
+
+//########################################
 //function SayHello(name){
 //    console.log('Hello '+name)
 //}
