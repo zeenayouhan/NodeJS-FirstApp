@@ -1,10 +1,10 @@
 const EventEmitter = require('events');
 
 const emitter = new EventEmitter();
-emitter.on('MessageLogged',function(){
-    console.log('Called Listenner');
+emitter.on('MessageLogged',(arg)=>{
+    console.log('Called Listenner',arg);
 })
-emitter.emit('MessageLogged');
+emitter.emit('MessageLogged',{id:1,url:'https://'});
 
 
 //########################################
