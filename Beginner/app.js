@@ -1,13 +1,23 @@
-const fs= require('fs');
+const EventEmitter = require('events');
 
-const files= fs.readdirSync('./');
-
-console.log(files);
-
-fs.readdir('./k',function(err,files){
-    if(err) console.log('Error');
-    else console.log(files);
+const emitter = new EventEmitter();
+emitter.on('MessageLogged',function(){
+    console.log('Called Listenner');
 })
+emitter.emit('MessageLogged');
+
+
+//########################################
+//const fs= require('fs');
+
+//const files= fs.readdirSync('./');
+
+//console.log(files);
+
+//fs.readdir('./k',function(err,files){
+  //  if(err) console.log('Error');
+  //  else console.log(files);
+//})
 
 
 //########################################
