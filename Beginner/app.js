@@ -1,7 +1,18 @@
-const path = require('path');
-var pathobj= path.parse(__filename);
+const os= require('os');
 
-console.log(pathobj);
+var freememd= os.freemem();
+
+console.log(freememd);
+
+
+
+
+
+//#########################################
+//const path = require('path');
+//var pathobj= path.parse(__filename);
+
+//console.log(pathobj);
 
 
 //##########################################
