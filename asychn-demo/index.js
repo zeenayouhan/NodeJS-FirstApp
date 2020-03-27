@@ -1,14 +1,24 @@
+//Asynchrounous
 console.log('before');
-getUser(1,(user)=>{
-    console.log('user',user);
-
-    getRepositories(user.githubUserName,(repos)=>{
-        console.log('repos',repos);
-    })
-});
+getUser(1,getRepositories);
 
 
 console.log('after');
+
+function getRepositories(user){
+
+    getRepositories(user.githubUserName,gitCommits);
+
+}
+function gitCommits(repos){
+    gitCommits(repo,displayCommits);
+}
+function displayCommits(commits){
+    console.log(commits);
+}
+
+
+
  
 function getUser(id, callback){
     setTimeout(()=>{
@@ -28,3 +38,11 @@ function getRepositories(username,callback)
     }, 2000);
     
 }
+
+
+//Synchronous
+//console.log('before');
+//const user=getUser(1);
+//const repos  = getRepositories(user.githubUserName);
+//const commits= getCommits(repos[0]);
+//console.log('after');
