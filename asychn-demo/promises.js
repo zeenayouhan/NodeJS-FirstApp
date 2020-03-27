@@ -10,4 +10,4 @@ const p = new Promise((resolve,reject)=>{
 
 });
 p.then(result =>console.log('result: ',result))
-.catch(err=>console.log('Error',err.message));
+.catch(err=>console.log('Error',err.message)); 

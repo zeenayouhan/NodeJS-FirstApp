@@ -16,27 +16,65 @@ function gitCommits(repos){
 function displayCommits(commits){
     console.log(commits);
 }
+//promises
+getUser(1)
+.then(user=>getRepositories(user.githubUserName))
+.then(repos=>getCommits(repos[0]))
+.then(commits=>console.log('Commits',commits))
+.catch(err=>console.log('error',err.message)); 
 
+//Async and Await approach
+async function displayCommits(){
+    try{
+        const user=await getUser(1);
+        const repos=await getRepositories(user.githubUserName);
+        const commits= await getCommits(repos[0]);
+        console.log(commits);
 
-
- 
-function getUser(id, callback){
-    setTimeout(()=>{
-        console.log("Reading the database.....");
-        callback({id:id,githubUserName:'zeenayouhan'});
-    },2000);
-    return 1;
+    }
+    catch(err){
+        console.log("error",err.message);
+    }
 
 }
 
-function getRepositories(username,callback)
-{
-    setTimeout(() => {
-        console.log('calling github Api ...');
-        callback(['repo1','repo2','repo3']);
-        
-    }, 2000);
+displayCommits()
+
+
+function getUser(id){
+    return new Promise((resolve,reject)=>{
+        setTimeout(()=>{
+        console.log("Reading the database.....");
+        resolve({id:id,githubUserName:'zeenayouhan'});
+    },2000);
+
+
+    })
     
+
+}
+
+function getRepositories(username)
+{
+    return new Promise((resolve,reject)=>{
+        setTimeout(() => {
+            console.log('calling github Api ...');
+            resolve(['repo1','repo2','repo3']);
+            
+        }, 2000);
+
+    })
+    
+    
+}
+
+function getCommits(repo){
+    return new Promise((resolve,reject)=>{
+        setTimeout(()=>{
+            console.log('Calling Github API...');
+            resolve(['commit']);
+        })
+    })
 }
 
 
