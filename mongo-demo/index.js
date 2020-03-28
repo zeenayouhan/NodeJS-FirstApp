@@ -15,24 +15,105 @@ const CourseSchema = new mongoose.Schema({
 
 const Course=mongoose.model('Course',CourseSchema);
 
-async function createCourse(){
-const course = new Course({
-    name:'Angular Course',
-    author:'Zeena',
-    tags:["Angular","Frontend"] ,
-    isPublished:true
-});
+// async function createCourse(){
+    
+// const course = new Course({
+//     name:'Angular Course',
+//     author:'Zeena',
+//     tags:["Angular","Frontend"] ,
+//     isPublished:true
+// });
 
-//const result=await course.save();
-console.log(result);
+// //const result=await course.save();
+// console.log(result);
+// }
+
+
+// async function getCourses(){
+//     //eq(equal)
+//     //ne - not equal
+//     //gt -greater than
+//     //gte -greater than or equal
+//     //lt-less than
+//     //lte -less than or equal
+//     //in
+//     //nin-not in
+//     //find({price: {4gte:10, $lte:20}})
+//     //find({price:{$in:[10,20,30]}})
+
+//     //or
+//     //and
+//     //find().or([{author:'mosh'},{isPublished:true}])Mosh
+
+
+//     //starts with mosh
+//     //find({author: /^/})
+
+//     //Ends with Hamedani
+//     //find({author:/Hamedani$/i})-case sensitive - use i
+
+//     //contains mosh
+//     //.find({author: /.*Mosh.*/i})
+
+//    const pageNumber =2;
+//    const pageSize=10;
+//    // /api/courses?pageNumber=2&pageSize=10
+   
+//    //skip((pageNumber-1)*pageSize).limit(pageSize)
+//    const courses= await Course.find({author:"Zeena",tags:"Frontend"}).limit(10).sort({name:1})
+//    .select({name: 1, tags:1}).count();
+//    console.log(courses);
+// }
+
+//getCourses();
+
+//createCourse();
+
+
+
+// async function updatecourse(id) {
+//     //Approach : Query first
+//     //findbyId()
+//     //Modify its properties
+//     //save()
+//     // const course=await Course.findById(id);
+//     // if(!course) return;
+
+
+//     // course.isPublished=true;
+//     // course.author="Another Author";
+//     // //course.set({
+//     // //    isPublished:true,
+//     //   //  author="Another Author",
+//     // //})
+//     // const result=await course.save();
+//     // console.log(result);
+
+//     //Approach: update first
+//     //update directly
+//     //optionally : get the update documents
+//     // const result= await Course.update({_id:id},{
+//     //     $set:{
+//     //         author:'Mosh',
+//     //         isPublished: false
+//     //     }
+//     // });
+//     // console.log(result);
+//     const course= await Course.findByIdAndUpdate({_id:id},{
+//         $set:{
+//             author:'Mosh',
+//             isPublished: false
+//         }
+//     },{new :true});
+//     console.log(course);
+// }
+
+// updatecourse('5e7e3671212db221e8cad5f1');
+
+
+async function removeCourse(id){
+    const result=await Course.deleteOne({_id:id});
+    const course= await Course.findByIdAndRemove(id);
+    console.log(result);
 }
-
-
-async function getCourses(){
-   const courses= await Course.find({author:"Zeena",tags:["Frontend"]}).limit(10).sort({name:1}).select({name: 1, tags:1});
-   console.log(courses);
-}
-
-getCourses();
-
-createCourse();
+removeCourse('5e7e3671212db221e8cad5f1')
