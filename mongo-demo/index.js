@@ -1,33 +1,57 @@
 const mongoose=require('mongoose');
 
-mongoose.connect('mongodb://localhost/playground')
+mongoose.connect('mongodb://localhost/playground',{ useNewUrlParser: true, useUnifiedTopology: true })
 .then(()=> console.log("connected the mongodb.."))
 .catch(err=> console.error('Could not connect to the db'));
 
 
 const CourseSchema = new mongoose.Schema({
-    name: String,
+    name:{
+        type: String, 
+        required: true,
+        minlength:5,
+        maxlength:255,
+    },
+    category:{
+        type: String,
+        enum:['web','mobile','network']
+
+    },
     author: String,
     tags :[String],
     date: {type: Date, default: Date.now},
     isPublished: Boolean,
+    price:{
+        type: Number,
+        required: function(){ return this.isPublished}
+
+    }
 });
 
 const Course=mongoose.model('Course',CourseSchema);
 
-// async function createCourse(){
+async function createCourse(){
     
-// const course = new Course({
-//     name:'Angular Course',
-//     author:'Zeena',
-//     tags:["Angular","Frontend"] ,
-//     isPublished:true
-// });
+const course = new Course({
+    name:'mjkjkj',
+    category:'web',
+    author:'Zeena',
+    tags:["Angular","Frontend"] ,
+    isPublished:true,
+    price:12
+});
+    try{
+        await course.validate();
+        // const result=await course.save();
+        // console.log(result);
 
-// //const result=await course.save();
-// console.log(result);
-// }
+    }
+    catch(error){
+        console.log(error._message);
+    }
 
+}
+createCourse();
 
 // async function getCourses(){
 //     //eq(equal)
@@ -65,40 +89,41 @@ const Course=mongoose.model('Course',CourseSchema);
 //    console.log(courses);
 // }
 
-//getCourses();
+// getCourses();
 
-//createCourse();
+
+
 
 
 
 // async function updatecourse(id) {
 //     //Approach : Query first
-//     //findbyId()
-//     //Modify its properties
-//     //save()
-//     // const course=await Course.findById(id);
-//     // if(!course) return;
+    //findbyId()
+    //Modify its properties
+    //save()
+    // const course=await Course.findById(id);
+    // if(!course) return;
 
 
-//     // course.isPublished=true;
-//     // course.author="Another Author";
-//     // //course.set({
-//     // //    isPublished:true,
-//     //   //  author="Another Author",
-//     // //})
-//     // const result=await course.save();
-//     // console.log(result);
+    // course.isPublished=true;
+    // course.author="Another Author";
+    // //course.set({
+    // //    isPublished:true,
+    //   //  author="Another Author",
+    // //})
+    // const result=await course.save();
+    // console.log(result);
 
-//     //Approach: update first
-//     //update directly
-//     //optionally : get the update documents
-//     // const result= await Course.update({_id:id},{
-//     //     $set:{
-//     //         author:'Mosh',
-//     //         isPublished: false
-//     //     }
-//     // });
-//     // console.log(result);
+    //Approach: update first
+    //update directly
+    //optionally : get the update documents
+    // const result= await Course.update({_id:id},{
+    //     $set:{
+    //         author:'Mosh',
+    //         isPublished: false
+    //     }
+    // });
+    // console.log(result);
 //     const course= await Course.findByIdAndUpdate({_id:id},{
 //         $set:{
 //             author:'Mosh',
@@ -111,9 +136,9 @@ const Course=mongoose.model('Course',CourseSchema);
 // updatecourse('5e7e3671212db221e8cad5f1');
 
 
-async function removeCourse(id){
-    const result=await Course.deleteOne({_id:id});
-    const course= await Course.findByIdAndRemove(id);
-    console.log(result);
-}
-removeCourse('5e7e3671212db221e8cad5f1')
+// async function removeCourse(id){
+//     const result=await Course.deleteOne({_id:id});
+//     const course= await Course.findByIdAndRemove(id);
+//     console.log(result);
+// }
+// removeCourse('5e7e3671212db221e8cad5f1')
