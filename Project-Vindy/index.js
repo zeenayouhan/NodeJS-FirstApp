@@ -48,6 +48,19 @@ app.put('/api/genres/:id',(req,res)=>{
     genre.name=req.body.name;
     res.send(genre);
 })
+app.delete('/api/genres/:id',(req,res)=>{
+    var genre=genres.find(c=>c.id===parseInt(req.params.id))
+    if(!genre) return res.status(404).send("Not found")
+
+    const {error}=validateGenre(req.body);
+    if(error){
+        return res.status(400).send(error.details[0].message);
+    }
+
+    const index=genres.indexOf(genre);
+    genres.splice(index);
+    res.send(genres);
+})
 app.listen(3000,()=>{
     console.log("Connected");
 
