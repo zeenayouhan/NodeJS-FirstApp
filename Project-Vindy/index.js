@@ -1,4 +1,5 @@
 const express= require('express');
+const Joi=require('joi');
 
 const app = express();
 
@@ -15,11 +16,11 @@ app.get('/api/genres',(req,res)=>{
 
 
 })
-app.post('/api/generes',(req,res)=>{
+app.post('/api/genres',(req,res)=>{
     const schema={
         name:Joi.string().min(4).required()
     }
-    const {error}= validateCourse(req.body);
+    const {error}= validateGenre(req.body);
     if(error){
         return res.status(404).send(error.details[0].message);
     }
@@ -31,8 +32,14 @@ app.post('/api/generes',(req,res)=>{
     genres.push(genre);
     res.send(genres);
 })
-
+function validateGenre(genre){
+    const schema={
+        name: Joi.string().min(4).required()
+    }
+    return Joi.validate(genre,schema);
+}
 app.listen(3000,()=>{
     console.log("Connected");
 
 })
+
